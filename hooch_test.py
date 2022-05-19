@@ -65,24 +65,32 @@ for i in data['list']:
     if i['dt_txt'] == forecasted_datetime:
         description = i["weather"][0]["description"]
         forecasted_temp = i['main']['temp']
+        precip_chance = float(i['pop'])*100
 
 ####### TESTS ON WATER QUALITY #######
 def water_quality(hooch_date):
     water_tests = [
-        "e.coli quality on " + hooch_date,
-        "Average water Temperature on " + hooch_date
+        "e.coli quantity on " + hooch_date,
+        "Average water Temperature on " + hooch_date,
+        "Average water velocity on " + hooch_date,
+        ""
     ]
     for l in water_tests:
         print(l, Back.GREEN + "PASS!" + Style.RESET_ALL)
         time.sleep(2)
 
 ####### TESTS ON WEATHER #######
-def weather_quality(forecasted_temp):
+def weather_quality(forecasted_temp, description):
     print("Testing the weather...")
-    if float(forecasted_temp) < 80.00:
+    time.sleep(2)
+    if float(forecasted_temp) < 60.00:
         print(Back.RED + "The temperature of " + str(forecasted_temp) + " is too low.  Keep an eye out for this one!" + Style.RESET_ALL)
+    elif description.__contains__('rain'):
+        print(Back.RED + "Uh oh it might rain! Lets check and see if the probability of rain is high..." + Style.RESET_ALL)
+        if precip_chance > 40.00:
+            print(Back.RED) + "Oh no! The chance of rain at that time is " + str(precip_chance) + " which is higher than the allowed threshhold. Might want to hold off on this one."
     else:
-        print(Back.GREEN + "The temperature of " + str(forecasted_temp) + " is freaking epic dude.  Lets ride!")
+        print(Back.GREEN + "The temperature of " + str(forecasted_temp) + " is freaking epic dude and doesn't look like it's gonna rain.  Lets ride!")
 
 ####### TESTS ON THE VIBE OF THE MANGO #######
 def overall_vibe(num_hoochers, jake_date, vibe_check, bevvies, franzi_yuh):
