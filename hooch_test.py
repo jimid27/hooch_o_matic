@@ -34,12 +34,21 @@ end_datetime = datetime.combine(future_date.date(), hooch_end_time.time())
 # Get Hoochers and Bevvie Count
 print("How many people are annihilating the Chattahoochie? ")
 num_hoochers = int(input())
+# See if that rascal is bringing a date on the Hooch
 print("Is Jake bringing a Date for Real?")
 jake_date = input()
-print("How many Bevvies do you have? ")
+if jake_date != "no":
+    num_hoochers = num_hoochers + 1
+    print(Back.GREEN + "Oh snap no way Jake is bringing a date on the high seas!" + Style.RESET_ALL)
+# Get a can count
+print("How many canned Bevvies do you have? ")
 bevvies = int(input())
+# Get a quick franzia check
 print("Bringing any Franzia with you? ")
 franzi_yuh = input()
+if franzi_yuh != "no":
+    bevvies = bevvies + 10
+    print(Back.MAGENTA + "Hell yeah dude we are about to slap that bag!" + Style.RESET_ALL)
 
 # CRITICAL!!! GET THE VIBE CHECK!!!!!
 print("True or False - The Vibes are High this weekend ")
@@ -79,20 +88,14 @@ def weather_quality(forecasted_temp):
 
 ####### TESTS ON THE VIBE OF THE MANGO #######
 def overall_vibe(num_hoochers, jake_date, vibe_check, bevvies, franzi_yuh):
-    if jake_date != "no":
-        num_hoochers = num_hoochers + 1
-        print("Oh snap no way Jake is bringing a date on the high seas!")
-    if franzi_yuh != "no":
-        bevvies = bevvies + 10
-        print("Hell yeah dude we are about to slap that bag!")
     drinks_person = bevvies / num_hoochers
     if drinks_person < 6:
         print(Back.RED + "Sorry folks, " + str(drinks_person) + " drinks per person is simply not enough beverages per person. Head back over to Publix and grab a case of the Rockies!" + Style.RESET_ALL)
     else:
         if franzi_yuh != "no":
-            print(Back.GREEN + "Heck Yeah you have " + str(drinks_person) + "drinks per person and you have a bag-o-blush! Get up in a tree and start slapping that bad boy!" + Style.RESET_ALL)
+            print("Heck Yeah you have " + str(drinks_person) + " drinks per person and you have a bag-o-blush! Get up in a tree and start slapping that bad boy! " + Back.GREEN + "PASS" + Style.RESET_ALL)
         else:
-            print(Back.GREEN + "You did it! With" + str(drinks_person) + " drinks per person, you have enough drinks for the Hooch!" + Style.RESET_ALL)
+            print("You did it! With" + str(drinks_person) + " drinks per person, you have enough drinks for the Hooch! " + Back.GREEN + "PASS" + Style.RESET_ALL)
 
 weather_quality(forecasted_temp)
 water_quality(hooch_date)
