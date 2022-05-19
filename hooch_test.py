@@ -6,7 +6,7 @@ import time
 from colorama import Fore, Back, Style
 
 ############ VAR INPUTS ###########
-api_key_weather = "1f64858882e3d5ea2b531cba94220279"
+api_key_weather = os.getenv('API_KEY_WEATHER') # Get API Key for openweathermap from os env
 city_name = "Atlanta,us"
 exclude = "minute,hourly"
 url = f'https://api.openweathermap.org/data/2.5/forecast?q={city_name}&APPID={api_key_weather}&units=imperial'
@@ -58,8 +58,6 @@ if vibe_check != "True":
     print("With that in mind...True or False - The Vibes are High this weekend ")
     vibe_check = input()
 
-print("The forcasted datetime is " + forecasted_datetime)
-
 ####### GET LIVE WEATHER FORECAST #######
 req = requests.get(url)
 data = req.json()
@@ -84,7 +82,7 @@ def weather_quality(forecasted_temp):
     if float(forecasted_temp) < 80.00:
         print(Back.RED + "The temperature of " + str(forecasted_temp) + " is too low.  Keep an eye out for this one!" + Style.RESET_ALL)
     else:
-        print(Back.GREEN + "The temperature of " + str(forecasted_temp) + " is fucking epic dude.  Lets ride!")
+        print(Back.GREEN + "The temperature of " + str(forecasted_temp) + " is freaking epic dude.  Lets ride!")
 
 ####### TESTS ON THE VIBE OF THE MANGO #######
 def overall_vibe(num_hoochers, jake_date, vibe_check, bevvies, franzi_yuh):
