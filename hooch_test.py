@@ -6,6 +6,8 @@ import time
 from colorama import Fore, Back, Style
 
 ############ VAR INPUTS ###########
+count_pass = 0
+count_fail = 0
 api_key_weather = os.getenv('API_KEY_WEATHER') # Get API Key for openweathermap from os env
 city_name = "Atlanta,us"
 exclude = "minute,hourly"
@@ -67,42 +69,83 @@ for i in data['list']:
         forecasted_temp = i['main']['temp']
         precip_chance = float(i['pop'])*100
 
+def prerequisites():
+    global count_pass
+    global count_fail
+    print("Checking prerequisite items for Hooching...")
+    prerequisite_items = [
+        "Do we have at least 1 paddle? ",
+        "Do we have at least 1 JBL Xtreme 2 speaker for tunes? ",
+        "Do we have the Baptized in the Chattahoochie Playlist downloaded? ",
+        "Do we have the H.O.O.C.H system in place? ",
+        "Has everyone played TWDIHDIHOTINPLFT? ",
+        "Do we have an updated tube chart ready to go? ",
+        "Do we have all tubes accounted for in our Chart? "
+    ]
+    for l in prerequisite_items:
+        print(l, Back.GREEN + "PASS!" + Style.RESET_ALL)
+        count_pass += 1
+        time.sleep(2)
 ####### TESTS ON WATER QUALITY #######
 def water_quality(hooch_date):
+    global count_pass
+    global count_fail
     water_tests = [
         "e.coli quantity on " + hooch_date,
         "Average water Temperature on " + hooch_date,
         "Average water velocity on " + hooch_date,
-        ""
+        "Average water height on " + hooch_date,
+        "Ability for at least one person to save someone's life if the fall over on " + hooch_date,
+        "Rob or Jimi onboard to swim group to island on " + hooch_date
     ]
     for l in water_tests:
         print(l, Back.GREEN + "PASS!" + Style.RESET_ALL)
+        count_pass += 1
         time.sleep(2)
 
 ####### TESTS ON WEATHER #######
 def weather_quality(forecasted_temp, description):
+    global count_pass
+    global count_fail
     print("Testing the weather...")
     time.sleep(2)
-    if float(forecasted_temp) < 60.00:
-        print(Back.RED + "The temperature of " + str(forecasted_temp) + " is too low.  Keep an eye out for this one!" + Style.RESET_ALL)
+    if float(forecasted_temp) < 75.00:
+        print("The temperature of " + str(forecasted_temp) + " is a bit too low.  Keep an eye out for this one! " + Back.RED + "FAIL" + Style.RESET_ALL)
+        count_fail += 1
     elif description.__contains__('rain'):
-        print(Back.RED + "Uh oh it might rain! Lets check and see if the probability of rain is high..." + Style.RESET_ALL)
         if precip_chance > 40.00:
-            print(Back.RED) + "Oh no! The chance of rain at that time is " + str(precip_chance) + " which is higher than the allowed threshhold. Might want to hold off on this one."
+            print("Oh no! The chance of rain at that time is " + str(precip_chance) + " which is higher than the allowed threshhold. Might want to hold off on this one. " + Back.RED + "FAIL" + Style.RESET_ALL)
+            count_fail += 1
+        else:
+            print("Looks like the chance of rain during Hooch time exists but is pretty low at " + str(precip_chance) + "%. Lets Party! " + Back.GREEN + "PASS" + Style.RESET_ALL)
+            count_pass += 1
     else:
-        print(Back.GREEN + "The temperature of " + str(forecasted_temp) + " is freaking epic dude and doesn't look like it's gonna rain.  Lets ride!")
+        print("The temperature of " + str(forecasted_temp) + " is freaking epic dude and doesn't look like it's gonna rain.  Lets ride! " + Back.GREEN + "PASS" + Style.RESET_ALL)
+        count_pass += 1
 
 ####### TESTS ON THE VIBE OF THE MANGO #######
 def overall_vibe(num_hoochers, jake_date, vibe_check, bevvies, franzi_yuh):
+    global count_pass
+    global count_fail
+    vibe_check_tests = [
+        "Is everyone ready to absolutely Vibe?",
+        "Do we have volunteers to work and put the two halves of the tube "
+        ""
+    ]
     drinks_person = bevvies / num_hoochers
     if drinks_person < 6:
-        print(Back.RED + "Sorry folks, " + str(drinks_person) + " drinks per person is simply not enough beverages per person. Head back over to Publix and grab a case of the Rockies!" + Style.RESET_ALL)
+        print("Sorry folks, " + str(drinks_person) + " drinks per person is simply not enough beverages per person. Head back over to Publix and grab a case of the Rockies! " + Back.RED + "FAIL" + Style.RESET_ALL)
+        count_fail += 1
     else:
         if franzi_yuh != "no":
             print("Heck Yeah you have " + str(drinks_person) + " drinks per person and you have a bag-o-blush! Get up in a tree and start slapping that bad boy! " + Back.GREEN + "PASS" + Style.RESET_ALL)
+            count_pass += 1
         else:
             print("You did it! With" + str(drinks_person) + " drinks per person, you have enough drinks for the Hooch! " + Back.GREEN + "PASS" + Style.RESET_ALL)
+            count_pass += 1
 
-weather_quality(forecasted_temp)
+prerequisites()
+weather_quality(forecasted_temp, description)
 water_quality(hooch_date)
 overall_vibe(num_hoochers, jake_date, vibe_check, bevvies, franzi_yuh)
+print(str(count_pass))
