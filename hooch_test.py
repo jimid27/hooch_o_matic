@@ -148,4 +148,10 @@ prerequisites()
 weather_quality(forecasted_temp, description)
 water_quality(hooch_date)
 overall_vibe(num_hoochers, jake_date, vibe_check, bevvies, franzi_yuh)
-print(str(count_pass))
+
+print("Passed tests: " + str(count_pass))
+print("Failed tests: " + str(count_fail))
+if count_fail > 1:
+    print("Probably best to sit this out :(")
+else:
+    print("We should be good to go. Lets boogie folks.")
